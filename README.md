@@ -1,56 +1,74 @@
-# Firewall Configuration with Ansible
+# Ansible Role Exercise: Firewall Configuration
 
-This project demonstrates how to use Ansible roles and variables to efficiently configure firewall rules on different types of servers.
+## Objective
+Create a structured Ansible project that uses roles and variables to configure the firewall on different types of servers.
+
+## Starting Requirements
+* 2 RHEL/AlmaLinux machines
+* Ansible installed on your control node
 
 ## Project Structure
+Create a complete Ansible project with the following structure:
 
 ```
 firewall-project/
-├── ansible.cfg          # Ansible configuration
-├── site.yml             # Main playbook
-├── inventory/           # Inventory directory
-│   ├── hosts            # Host definitions
-│   └── group_vars/      # Group variables
-│       ├── all.yml      # Variables for all hosts
-│       ├── webservers.yml # Variables for web servers
-│       └── dbservers.yml # Variables for database servers
+├── ansible.cfg
+├── site.yml
+├── inventory/
+│   ├── hosts
+│   └── group_vars/
+│       ├── all.yml
+│       ├── webservers.yml
+│       └── dbservers.yml
 └── roles/
-    └── firewall/        # Firewall configuration role
+    └── firewall/
+        ├── tasks/
+        │   └── main.yml
+        ├── handlers/
+        │   └── main.yml
+        └── defaults/
+            └── main.yml
 ```
 
-## How to Run
+## Tasks
 
-1. Update the inventory/hosts file with your actual server information
-2. Run the playbook:
+### 1. Initialize the Project Structure
+* Create the directory structure above
+* Initialize the `firewall` role using `ansible-galaxy init roles/firewall`
 
-```bash
-ansible-playbook site.yml
-```
+### 2. Inventory Setup
+* Create an inventory directory with a hosts file
+* Define two host groups: "webservers" and "dbservers"
+* Create appropriate group_vars files for each group
 
-3. To run with additional options:
+### 3. Role Development
+* Develop the `firewall` role to:
+  * Install firewalld
+  * Ensure firewalld is running and enabled
+  * Configure appropriate firewall rules based on host group
 
-```bash
-# Dry run (check mode)
-ansible-playbook site.yml --check
+### 4. Main Playbook (site.yml)
+* Create a site.yml file at the project root
+* Apply the firewall role to appropriate host groups
+* Use variables to control which ports are opened on different servers
 
-# Run only for web servers
-ansible-playbook site.yml --limit webservers
+## Requirements
 
-# Run only installation tasks
-ansible-playbook site.yml --tags install
-```
+1. **Variables Setup:**
+   * Define variables for firewall ports in group_vars files
+   * Allow incoming traffic on port 80 on the webservers
+   * Allow incoming traffic on port 3306 on the dbservers
 
-## Role Variables
+2. **Role Implementation:**
+   * The `firewall` role should handle all firewall configuration
+   * Use conditionals to apply the correct rules based on the server type
+   * Include appropriate handlers for service restart
 
-The firewall role uses variables from group_vars to determine which ports to open:
+3. **Efficiency Requirement:**
+   * No repeating tasks - use a single role with variables
+   * Use loop constructs when applying multiple similar firewall rules
 
-- **common_firewall_ports**: Applied to all servers (SSH)
-- **specific_firewall_ports**: Applied based on server type (HTTP/HTTPS for web servers, MySQL for database servers)
-
-## Verification
-
-After running the playbook, the current firewall configuration will be displayed. You can also check manually on any server:
-
-```bash
-firewall-cmd --list-all
-```
+## Bonus Tasks
+* Add support for additional ports (SSH on port 22 for all servers)
+* Implement a development inventory with different firewall settings
+* Create a custom handler to validate firewall rules after applying them
