@@ -68,7 +68,7 @@ firewall-project/
    * No repeating tasks - use a single role with variables
    * Use loop constructs when applying multiple similar firewall rules
 
-## Bonus Tasks
-* Add support for additional ports (SSH on port 22 for all servers)
-* Implement a development inventory with different firewall settings
-* Create a custom handler to validate firewall rules after applying them
+4. **Extras**
+   * Add support for additional ports (SSH on port 22 for all servers)
+   * Implement a development inventory with different firewall settings
+   * Create a custom handler to validate firewall rules after applying them
