@@ -48,7 +48,7 @@ firewall-project/
   * Configure appropriate firewall rules based on host group
 
 ### 4. Main Playbook (site.yml)
-* Create a site.yml file at the project root
+* Create a `site.yml` file at the project root
 * Apply the firewall role to appropriate host groups
 * Use variables to control which ports are opened on different servers
 
@@ -56,8 +56,8 @@ firewall-project/
 
 1. **Variables Setup:**
    * Define variables for firewall ports in group_vars files
-   * Allow incoming traffic on port 80 on the webservers
-   * Allow incoming traffic on port 3306 on the dbservers
+   * Allow incoming traffic on port `80` on the webservers
+   * Allow incoming traffic on port `3306` on the dbservers
 
 2. **Role Implementation:**
    * The `firewall` role should handle all firewall configuration
